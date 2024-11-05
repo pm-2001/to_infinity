@@ -3,3 +3,4 @@
 /backend/.vscode/
 venv/
 backend/venv/
+__pycache__/

@@ -1,8 +1,8 @@
 from fastapi import FastAPI, APIRouter
-from views.image import imageinfo
+from views.video import videoinfo
 
 router = APIRouter()
 
-@router.post("/")
+@router.get("/")
 def text_desc():
-    return imageinfo()
+    return videoinfo()
