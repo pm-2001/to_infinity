@@ -1,8 +1,8 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, File, UploadFile
 from views.video import videoinfo
 
 router = APIRouter()
 
-@router.get("/")
-def text_desc():
-    return videoinfo()
+@router.post("/")
+def text_desc(file: UploadFile = File(...)):
+    return videoinfo(file)
