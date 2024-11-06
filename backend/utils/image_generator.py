@@ -35,18 +35,14 @@ def generate_images_from_json(json_data):
             # item_name = next(iter(item))  # Get the key (item name) from the dictionary
             tags = json_data[item]  # Get the value (list of tags) from the dictionary  
             prompt = f"{item}: {', '.join(tags)}"
-            print("#####################################")
-            print(prompt)
             image_bytes = query({"inputs": prompt})
-            print("helloooooooooooooooooo")
-            print(type(image_bytes))
             
             if image_bytes:
                 try:
                     # image_link = save_image(image_bytes, item)
                     image = io.BytesIO(image_bytes)
                     image_link = s3fileUpload(image,item)
-                    print(image_link)
+                    # print(image_link)
 
                     new_json[item] = {
                         "tags": ', '.join(tags),

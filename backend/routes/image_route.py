@@ -1,8 +1,9 @@
 from fastapi import FastAPI, APIRouter
 from views.image import imageinfo
+from fastapi import File, UploadFile
 
 router = APIRouter()
 
 @router.post("/")
-def text_desc():
-    return imageinfo()
+def image_upload(file : UploadFile = File(...)):
+    return imageinfo(file)

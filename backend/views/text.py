@@ -5,20 +5,28 @@ from g4f.client import Client
 from utils.json_extract import extract_json
 from utils.image_generator import generate_images_from_json
 import json
+from g4f.Provider.GeminiPro import GeminiPro
+from g4f.Provider.GeminiProChat import GeminiProChat
+import google.generativeai as genai
+import os
+
+GEMINI_API_KEY=""
+# clientimage = Client(provider=GeminiPro, api_key = GEMINI_API_KEY)
+client = Client(provider=GeminiPro, api_key=GEMINI_API_KEY)
 
 
-client = Client()
 
 
 
 def textinfo(request):
     if request.text:
-        ntpi = '; extract keywords related to each object described here and list them like this: {"Product name 1": ["feature 1","Feature 2","feature 3"],"Product name 2": ["feature 1","Feature 2","feature 3"],"Product name 3": ["feature 1","Feature 2","feature 3"],}'
+        ntpi= 'extract keywords related to each object described here and list them like this: {"Product name 1": ["feature 1","Feature 2","feature 3"],"Product name 2": ["feature 1","Feature 2","feature 3"],"Product name 3": ["feature 1","Feature 2","feature 3"],}without ```'
+        print("Request text:", request.text)
         prompt = request.text + ntpi
         
         try:
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="",
                 messages=[{"role": "user", "content": prompt}],
             )
             
