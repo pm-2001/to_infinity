@@ -7,17 +7,17 @@ from g4f.client import Client
 from utils.json_extract import extract_json
 from utils.image_generator import generate_images_from_json
 import g4f.Provider.GeminiPro as GeminiPro
-
-
-GEMINI_API_KEY=""
-# clientimage = Client(provider=GeminiPro, api_key = GEMINI_API_KEY)
-client = Client(provider=GeminiPro, api_key=GEMINI_API_KEY)
-
-
-import os
 import tempfile
 import moviepy.editor as mp
 import speech_recognition as sr
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+
+
+GEMINI_API_KEY=os.getenv("GEMINI_API_KEY")
+client = Client(provider=GeminiPro, api_key=GEMINI_API_KEY)
 
 
 temp_dir = tempfile.mkdtemp()
@@ -56,17 +56,22 @@ def videoinfo(file):
         # Transcribe the video
         transcription = transcribe_video(video_path)
         print("Transcription",transcription)
-        ntpi= ';extract keywords related to each object described in text and list them like this: {"Product name 1": ["feature 1","Feature 2","feature 3"],"Product name 2": ["feature 1","Feature 2","feature 3"],"Product name 3": ["feature 1","Feature 2","feature 3"],}, without ```'
+
+        ntpi= ';extract keywords related to each object described in text and list them like this: {"Product Name": {"description": ["detailed description in paragraph"],"price": ["cost of product"],"variations": ["size/color variations (if applicable)"],"category": ["product category"],"features": ["key features"],"specifications": ["specifications"]}} and write description in one paragraph and if required details are missing, mention NULL in the list ; without ```'
 
         prompt = "Text:"+transcription + ntpi
         response = client.chat.completions.create(
             model="",
             messages=[{"role": "user", "content": prompt}],
         )
-        if response.choices[0].message.content:
-            response_json = response.choices[0].message.content
-            print(response_json)
-            response_json = extract_json(response_json)
+
+        response_text = response.choices[0].message.content
+        print(response_text)
+        cleaned_text = response_text.replace("```json", "").replace("```", "").strip()
+        print("Raw API response:", cleaned_text)
+        if cleaned_text:
+            response_json = extract_json(cleaned_text)
+            print("Parsed JSON:", response_json)
             if response_json:
                 newjson = generate_images_from_json(response_json)
                 # newjson = generate_images_from_json(response_json)

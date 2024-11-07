@@ -8,19 +8,25 @@ import json
 from g4f.Provider.GeminiPro import GeminiPro
 from g4f.Provider.GeminiProChat import GeminiProChat
 import google.generativeai as genai
+from dotenv import load_dotenv
+load_dotenv()
 import os
 
-GEMINI_API_KEY=""
-# clientimage = Client(provider=GeminiPro, api_key = GEMINI_API_KEY)
+
+
+GEMINI_API_KEY=os.getenv("GEMINI_API_KEY")
+
 client = Client(provider=GeminiPro, api_key=GEMINI_API_KEY)
 
 
-
-
+# extract keywords related to each object described here and list them like this: {"Product Name": {"description": ["detailed description"],"price": ["cost of product"],"variations": ["size/color variations (if applicable)"],"category": ["product category"],"features": ["key features"],"specifications": ["specifications"]}} and if required details are missing, mention NULL in the list
 
 def textinfo(request):
     if request.text:
-        ntpi= 'extract keywords related to each object described here and list them like this: {"Product name 1": ["feature 1","Feature 2","feature 3"],"Product name 2": ["feature 1","Feature 2","feature 3"],"Product name 3": ["feature 1","Feature 2","feature 3"],}without ```'
+        # ntpi= 'extract keywords related to each object described here and list them like this: {"Product name 1": ["feature 1","Feature 2","feature 3"],"Product name 2": ["feature 1","Feature 2","feature 3"],"Product name 3": ["feature 1","Feature 2","feature 3"],}without ```'
+
+        ntpi= ';extract keywords related to each object described here and list them like this: {"Product Name": {"description": ["detailed description in one paragraph"],"price": ["cost of product"],"variations": ["size/color variations (if applicable)"],"category": ["product category"],"features": ["key features"],"specifications": ["specifications"]}} and if required details are missing, mention NULL in the list ; without ```'
+
         print("Request text:", request.text)
         prompt = request.text + ntpi
         
@@ -32,13 +38,13 @@ def textinfo(request):
             
             # Print raw response for debugging
             response_text = response.choices[0].message.content
-            print("Raw API response:", response_text)
+            print(response_text)
+            cleaned_text = response_text.replace("```json", "").replace("```", "").strip()
             
-            if response_text:
+            if cleaned_text:
                 try:
-                    response_json = extract_json(response_text)
-                    print("Parsed JSON:", response_json)
-                    
+                    response_json = extract_json(cleaned_text)
+                    print("Parsed JSON:", response_json)             
                     if response_json:
                         new_json = generate_images_from_json(response_json)
                         print("Generated JSON for images:", new_json)

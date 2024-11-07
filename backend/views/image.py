@@ -9,10 +9,13 @@ from pathlib import Path
 import shutil
 from g4f.Provider.GeminiPro import GeminiPro
 from g4f.Provider.GeminiProChat import GeminiProChat
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 
-GEMINI_API_KEY=""
-# clientimage = Client(provider=GeminiPro, api_key = GEMINI_API_KEY)
+GEMINI_API_KEY=os.getenv("GEMINI_API_KEY")
+
 client = Client(provider=GeminiPro, api_key=GEMINI_API_KEY)
 
 def imageinfo(file):
@@ -26,7 +29,9 @@ def imageinfo(file):
             shutil.copyfileobj(file.file, buffer)
     
         with file_path.open("rb") as img:
-            ntpi1= '; only return name of product;without ``` '
+            # ntpi1= '; only return name of product;without ``` '
+
+            ntpi1= 'without this ```;extract keywords related to each object described here and list them like this: {"Product Name": {"description": ["detailed description in paragraph"],"price": ["cost of product"],"variations": ["size/color variations (if applicable)"],"category": ["product category"],"features": ["key features"],"specifications": ["specifications"]}} and write description in one paragraph and if required details are missing, mention NULL in the list; without this ```'
             # prompt = set_lang_english+ntpi+image_identify_prompt_instructions2
             response = client.chat.completions.create(
                 model="gemini-1.5-flash",
@@ -36,20 +41,22 @@ def imageinfo(file):
 
         # Delete the locally saved image
         file_path.unlink()
-        response_content = response.choices[0].message.content
-        print(response_content)
-
-        ntpi2= '; for the products given ,list product names as key and features as value in given prompt like this: {"Product name 1": ["feature 1","feature 2","feature 3"],"Product name 2": ["feature 1","feature 2","feature 3"],"Product name 3": ["feature 1","feature 2","feature 3"],}; without ```'
-        prompt ='Product = '+response_content+ntpi2
-        response = client.chat.completions.create(
-            model="",
-            messages=[{"role": "user", "content": prompt}],
-        )
         response_text = response.choices[0].message.content
-        print("Raw API response:", response_text)
-        if response_text:
+        print(response_text)
+        cleaned_text = response_text.replace("```json", "").replace("```", "").strip()
+        # print("Response content:fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+        # ntpi2= '; for the products given ,list product names as key and features as value in given prompt like this: {"Product name 1": ["feature 1","feature 2","feature 3"],"Product name 2": ["feature 1","feature 2","feature 3"],"Product name 3": ["feature 1","feature 2","feature 3"],}; without ```'
+
+        # prompt ='Product = '+response_content+ntpi2
+        # response = client.chat.completions.create(
+        #     model="",
+        #     messages=[{"role": "user", "content": prompt}],
+        # )
+        # response_text = response.choices[0].message.content
+        print("Raw API response:", cleaned_text)
+        if cleaned_text:
             try:
-                response_json = extract_json(response_text)
+                response_json = extract_json(cleaned_text)
                 print("Parsed JSON:", response_json)
                     
                 if response_json:

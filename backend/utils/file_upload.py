@@ -1,9 +1,16 @@
 from fastapi import UploadFile
 import boto3
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-BUCKET_NAME = 'amazonhackon'
-AWS_ACCESS_KEY_ID = 'AKIA47CRXMU3YRR2UXW7'
-AWS_SECRET_ACCESS_KEY = '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'
+BUCKET_NAME = os.getenv("BUCKET_NAME")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+# BUCKET_NAME = 'amazonhackon'
+# AWS_ACCESS_KEY_ID = 'AKIA47CRXMU3YRR2UXW7'
+# AWS_SECRET_ACCESS_KEY = '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'
 
 s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID,aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 

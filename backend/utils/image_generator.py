@@ -26,33 +26,36 @@ def query(payload, max_retries=10, retry_delay=30):
     print(f"Failed after {max_retries} retries.")
     return None
 
+
 def generate_images_from_json(json_data):
-# def generate_images_from_json(json_data):
-    # db_history = Historys()
     new_json = {}
+
     for item in json_data:
         if item: 
-            # item_name = next(iter(item))  # Get the key (item name) from the dictionary
-            tags = json_data[item]  # Get the value (list of tags) from the dictionary  
+            # Get the description tags for the prompt
+            tags = json_data[item]["description"]
+            print(tags)
+            
+            # Create a prompt for image generation
             prompt = f"{item}: {', '.join(tags)}"
             image_bytes = query({"inputs": prompt})
             
             if image_bytes:
                 try:
-                    # image_link = save_image(image_bytes, item)
+                    # Convert image bytes to an image and upload to S3
                     image = io.BytesIO(image_bytes)
-                    image_link = s3fileUpload(image,item)
-                    # print(image_link)
-
+                    image_link = s3fileUpload(image, item)
+                    
+                    # Update new_json with tags and the image link
                     new_json[item] = {
-                        "tags": ', '.join(tags),
+                        **json_data[item],  # Unpack all keys/values from json_data[item]
                         "image_link": image_link
                     }
 
                 except IOError:
                     print(f"Error: Could not generate image for {item}")
                     new_json[item] = {
-                        "tags": ', '.join(tags),
+                        **json_data[item],
                         "image_link": "Error: Image could not be generated"
                     }
         else:
