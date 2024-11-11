@@ -27,12 +27,12 @@ export const submitText = async (text: string): Promise<any> => {
 export const submitImage = async (imageFile: File): Promise<any> => {
   console.log("Submitting image file:", imageFile);
   const formData = new FormData();
-  formData.append("image", imageFile);  // Make sure the key "image" matches your backend's expected field name
+  formData.append('file', imageFile);  // Make sure the key "image" matches your backend's expected field name
+  console.log(formData);
   try {
-    const response = await apiClient.post("/image/", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const response = await axios.post('http://127.0.0.1:8000/image/',formData, {headers: {'content-type': 'multipart/form-data'},});
     return response.data;
+
   } catch (error) {
     const err = error as any;
     console.error("Error uploading image:", err.response?.data || err.message);
@@ -42,7 +42,7 @@ export const submitImage = async (imageFile: File): Promise<any> => {
 
 export const submitVideo = async (videoFile: File): Promise<any> => {
   const formData = new FormData();
-  formData.append("video", videoFile);  // Same for video, if applicable
+  formData.append("file", videoFile);  // Same for video, if applicable
   const response = await apiClient.post("/video/", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });

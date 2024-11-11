@@ -3,20 +3,26 @@ import './App.css';
 import ListProduct from './components/ListProduct';
 import Navbar from './components/Navbar';
 import CardInput from './components/CardInput';
-import { Product } from './components/apiServices';
+import Loader from './components/Loader';
 
 function App() {
-  const [productData, setProductData] = useState<Product | null>(null);
 
   return (
     <>
-      <div className="d-flex flex-column">
+      <div
+        className="d-flex flex-column"
+        style={{
+          background: "#bce6ff", // Gradient related to blue theme
+          minHeight: "100vh", // Ensures the background covers the full height of the screen
+        }}
+      >
         <Navbar />
-        <CardInput/>
-        {/* {<ListProduct product={productData} />} */}
+        <CardInput />
+        {/* <Loader /> */}
       </div>
     </>
   );
+  
 }
 
 export default App;
