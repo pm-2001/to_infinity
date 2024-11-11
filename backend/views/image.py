@@ -44,15 +44,7 @@ def imageinfo(file):
         response_text = response.choices[0].message.content
         print(response_text)
         cleaned_text = response_text.replace("```json", "").replace("```", "").strip()
-        # print("Response content:fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-        # ntpi2= '; for the products given ,list product names as key and features as value in given prompt like this: {"Product name 1": ["feature 1","feature 2","feature 3"],"Product name 2": ["feature 1","feature 2","feature 3"],"Product name 3": ["feature 1","feature 2","feature 3"],}; without ```'
 
-        # prompt ='Product = '+response_content+ntpi2
-        # response = client.chat.completions.create(
-        #     model="",
-        #     messages=[{"role": "user", "content": prompt}],
-        # )
-        # response_text = response.choices[0].message.content
         print("Raw API response:", cleaned_text)
         if cleaned_text:
             try:

@@ -18,9 +18,6 @@ GEMINI_API_KEY=os.getenv("GEMINI_API_KEY")
 
 client = Client(provider=GeminiPro, api_key=GEMINI_API_KEY)
 
-
-# extract keywords related to each object described here and list them like this: {"Product Name": {"description": ["detailed description"],"price": ["cost of product"],"variations": ["size/color variations (if applicable)"],"category": ["product category"],"features": ["key features"],"specifications": ["specifications"]}} and if required details are missing, mention NULL in the list
-
 def textinfo(request):
     if request.text:
         # ntpi= 'extract keywords related to each object described here and list them like this: {"Product name 1": ["feature 1","Feature 2","feature 3"],"Product name 2": ["feature 1","Feature 2","feature 3"],"Product name 3": ["feature 1","Feature 2","feature 3"],}without ```'
