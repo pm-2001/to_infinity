@@ -1,4 +1,4 @@
-﻿# AmazonAssist
+﻿# Post2Product
 
  > ## Installation
  clone this repository 
