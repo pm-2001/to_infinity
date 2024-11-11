@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+﻿# AmazonAssist
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ > ## Installation
+ clone this repository 
 
-## Available Scripts
+- open in any text editor 
+-  `cd Post2Product`
+> ## 1. Web application
 
-In the project directory, you can run:
+### a. backend
+1. `cd backend`
 
-### `npm start`
+2. create a virtual environment
+- `python -m venv env`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+for linux / MacOS
+- `source env/bin/activate`
+for windows
+- `.\env\Scripts\activate`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- `pip install -r requirements.txt`
+3. make a .env file in /backend
 
-### `npm test`
+### AWS Configuration
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The project also requires AWS credentials for accessing various AWS services. Below are the necessary details provided by the AWS website:
 
-### `npm run build`
+- *AWS Access Key*: your_aws_access_key
+- *AWS Secret Key*: your_aws_secret_key
+- *S3 Bucket Name*: your_bucket_name
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Google Vortex AI Configuration
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The project also requires Google Cloud credentials for accessing Google Cloud services. Below are the necessary details provided by the Google Cloud Console:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- *Google API KEY*: google gemini api key
 
-### `npm run eject`
+- add all these keys into .env file.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. `uvicorn main:app --reload`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+### b. frontend
+- `cd frontend`
+- `npm install`
+- `npm run dev`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Home page
+![image](https://github.com/user-attachments/assets/e8396231-e494-418c-a831-1dc89ea5495f)
 
-### Code Splitting
+### Loading Page
+![image](https://github.com/user-attachments/assets/b05e23aa-afef-4ced-a7c9-9e2462e1c6cf)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Result Page
+![image](https://github.com/user-attachments/assets/eb2a1909-0bb5-466e-946c-3758c767d25b)
 
-### Analyzing the Bundle Size
+![image](https://github.com/user-attachments/assets/75965c48-de7e-4167-b1b0-887e963192b7)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
