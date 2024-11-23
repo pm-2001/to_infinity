@@ -1,10 +1,13 @@
 from utils.file_upload import s3fileUpload
 import requests,io
 import time
+from dotenv import load_dotenv
+import os
+load_dotenv()
+HUGGINGFACE_API = os.getenv("HUGGINGFACE_API")
 
 HUGGINGFACE_API_URL = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev"
-headers = {"Authorization": f"Bearer {'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'}","language":'en',}
-HUGGINGFACE_SPEECH_TO_TEXT_API_URL = "https://api-inference.huggingface.co/models/openai/whisper-large-v3"
+headers = {"Authorization": f"Bearer {HUGGINGFACE_API}","language":'en',}
 
 def query(payload, max_retries=10, retry_delay=30):
     retries = 0
@@ -44,7 +47,10 @@ def generate_images_from_json(json_data):
                 try:
                     # Convert image bytes to an image and upload to S3
                     image = io.BytesIO(image_bytes)
+                    print("image")
                     image_link = s3fileUpload(image, item)
+                    print("image_link",image_link)
+
                     
                     # Update new_json with tags and the image link
                     new_json[item] = {

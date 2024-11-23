@@ -1,7 +1,7 @@
-export const updateAmazonUrl = (itemName: string, tags: string[]) => {
+export const updateAmazonUrl = (itemName: string, tags: string) => {
     const amazonBaseUrl = 'https://www.amazon.in/s';
     const params = new URLSearchParams({
-      k: `${itemName}`, 
+      k: `${itemName} ${tags}`, 
       adgrpid: '60615884122',
       ext_vrnc: 'hi',
       hvadid: '618279464807',

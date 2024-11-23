@@ -15,7 +15,6 @@ load_dotenv()
 import os
 
 
-
 GEMINI_API_KEY=os.getenv("GEMINI_API_KEY")
 client = Client(provider=GeminiPro, api_key=GEMINI_API_KEY)
 

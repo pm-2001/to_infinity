@@ -10,7 +10,7 @@ const ListProduct: React.FC<ListProductProps> = ({ product }) => {
   return (
     <div className="row justify-content-center">
       {product.map((item, index) => {
-        const amazonUrl = updateAmazonUrl(item.name, item.features);
+        const amazonUrl = updateAmazonUrl(item.name, item.category);
         
         return (
           <div key={index} className="col-12 col-md-11 col-lg-10" style={{ width: "100%" }}>

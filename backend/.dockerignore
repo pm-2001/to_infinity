@@ -1,0 +1,13 @@
+__pycache__
+backend/__pycache__
+backend/__pycache__/
+venv
+backend/venv
+backend/venv/
+
+.env
+backend/.env
+env
+backend/env
+images/
+__pycache__
