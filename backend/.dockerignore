@@ -11,3 +11,8 @@ env
 backend/env
 images/
 __pycache__
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
